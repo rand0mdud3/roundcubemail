@@ -275,19 +275,23 @@ abstract class rcube_storage
     abstract function get_capability($cap);
 
     /**
-     * Sets threading flag to the best supported THREAD algorithm.
-     * Enable/Disable threaded mode.
+     * Sets threading flag to the best supported THREAD algorithm and user choice.
      *
-     * @param bool $enable True to enable threading
+     * @param int $mode 0-disabled, 1-refs priority, 2-subject priority
      *
      * @return mixed Threading algorithm or False if THREAD is not supported
      */
-    public function set_threading($enable = false)
+    public function set_threading($mode = 0)
     {
         $this->threading = false;
 
-        if ($enable && ($caps = $this->get_capability('THREAD'))) {
-            $methods = ['REFS', 'REFERENCES', 'ORDEREDSUBJECT'];
+        if ($mode && ($caps = $this->get_capability('THREAD'))) {
+            $methods = array();
+            if ($mode == 1) {
+              $methods = array('REFS', 'REFERENCES', 'ORDEREDSUBJECT');
+            } else {
+              $methods = array('ORDEREDSUBJECT', 'REFS', 'REFERENCES');
+            }
             $methods = array_intersect($methods, $caps);
 
             $this->threading = array_first($methods);

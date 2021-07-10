@@ -100,7 +100,7 @@ class rcmail_action_settings_folder_save extends rcmail_action_settings_folder_e
                 'class'    => '',
                 'options'  => $options,
                 'settings' => [
-                    // List view mode: 0-list, 1-threads
+                    // List view mode: 0-list, 1-threads, 2-subjects
                     'view_mode'   => (int) rcube_utils::get_input_string('_viewmode', rcube_utils::INPUT_POST),
                     'sort_column' => rcube_utils::get_input_string('_sortcol', rcube_utils::INPUT_POST),
                     'sort_order'  => rcube_utils::get_input_string('_sortord', rcube_utils::INPUT_POST),
@@ -138,7 +138,7 @@ class rcmail_action_settings_folder_save extends rcmail_action_settings_folder_e
                 if (isset($_POST['_viewmode'])) {
                     $a_threaded = (array) $rcmail->config->get('message_threading', []);
 
-                    $a_threaded[$folder['name']] = (bool) $_POST['_viewmode'];
+                    $a_threaded[$folder['name']] = (int) $_POST['_viewmode'];
 
                     $rcmail->user->save_prefs(['message_threading' => $a_threaded]);
                 }
@@ -198,7 +198,7 @@ class rcmail_action_settings_folder_save extends rcmail_action_settings_folder_e
                         }
                     }
 
-                    $a_threaded[$folder['name']] = (bool) $_POST['_viewmode'];
+                    $a_threaded[$folder['name']] = (int) $_POST['_viewmode'];
 
                     $rcmail->user->save_prefs(['message_threading' => $a_threaded]);
                 }

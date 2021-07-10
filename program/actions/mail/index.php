@@ -214,18 +214,15 @@ class rcmail_action_mail_index extends rcmail_action
                 if (!$a_threading[$_SESSION['mbox']]) {
                     $rcmail->storage->set_page($_SESSION['page'] = 1);
                 }
-
-                $a_threading[$_SESSION['mbox']] = true;
             }
             else {
                 // re-set current page number when listing mode changes
                 if ($a_threading[$_SESSION['mbox']]) {
                     $rcmail->storage->set_page($_SESSION['page'] = 1);
                 }
-
-                $a_threading[$_SESSION['mbox']] = false;
             }
 
+            $a_threading[$_SESSION['mbox']] = (int) $_GET['_threads'];
             $rcmail->user->save_prefs(['message_threading' => $a_threading]);
         }
 

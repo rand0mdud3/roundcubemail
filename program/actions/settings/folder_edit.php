@@ -194,6 +194,7 @@ class rcmail_action_settings_folder_edit extends rcmail_action_settings_folders
 
             $select->add($rcmail->gettext('list'), 0);
             $select->add($rcmail->gettext('threads'), 1);
+            $select->add($RCMAIL->gettext('subject'), 2);
 
             if (isset($_POST['_viewmode'])) {
                 $value = (int) $_POST['_viewmode'];
